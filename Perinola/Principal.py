@@ -1,4 +1,24 @@
-from random import choice
+from apuesta import Apuesta
+from perinola import Perinola
+from jugador import Jugador
+from ronda import Ronda
+
+
+jugadores = Ronda ()
+nombres = ("j1", "j2", "j3", "j4")
+for n in nombres:
+    j = Jugador (n)
+jugadores.agregarjugador(j)
+apuesta = Apuesta()
+perinola = Perinola()
+ 
+
+
+
+
+
+
+
 
 p = Perinola()
 print(p)
@@ -9,14 +29,3 @@ print(p)
 print(p.cara_visible)
 
 
-from random import choice
-class Perinola:
-    def __init__(self):
-        self.cara_visible = "Pon 1"
-    def __repr__(self):
-         return f"Salio: {self.cara_visible}"
-    def tirar (self):
-     caras = ("Pon 1", "Toma 2", "Todos Ponen",
-              "Toma 1", "Pon 2", "Toma Todo")
-     self.cara_visible = choice(caras)
-     return self.cara_visible 

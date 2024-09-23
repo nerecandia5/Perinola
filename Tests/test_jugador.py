@@ -1,87 +1,48 @@
-from Perinola import Perinola
-from Apuesta import Apuesta
-from Jugador import Jugador
-from Ronda import Ronda
+import unittest
+from jugador import Jugador
 
+class TestJugador(unittest.TestCase):
 
-p = Perinola()
-p.tirar()
-print(p.cara_visible)
+    def setUp(self):
+        """Preparar el entorno para las pruebas."""
+        self.jugador = Jugador("Tomas", 5)
 
+    def test_inicializacion(self):
+        """Probar la inicialización del jugador."""
+        self.assertEqual(self.jugador.nombre, "Tomas")
+        self.assertEqual(self.jugador.fichas, 5)
 
+    def test_darFicha(self):
+        """Probar el método darFicha."""
+        self.jugador.darFicha(3)
+        self.assertEqual(self.jugador.fichas, 8)
+        self.jugador.darFicha()
+        self.assertEqual(self.jugador.fichas, 9)
 
+    def test_sacarFicha(self):
+        """Probar el método sacarFicha."""
+        self.jugador.sacarFicha(2)
+        self.assertEqual(self.jugador.fichas, 3)
+        self.jugador.sacarFicha()
+        self.assertEqual(self.jugador.fichas, 2)
+        
+        with self.assertRaises(ValueError):
+            self.jugador.sacarFicha(3)
 
+    def test_tieneFicha(self):
+        """Probar el método tieneFicha."""
+        self.assertTrue(self.jugador.tieneFicha(2))
+        self.assertFalse(self.jugador.tieneFicha(6))
 
+    def test_sinFichas(self):
+        """Probar el método sinFichas."""
+        self.assertFalse(self.jugador.sinFichas())
+        self.jugador.sacarFicha(5)
+        self.assertTrue(self.jugador.sinFichas())
 
-a = Apuesta()
-a.ponerFichas(5)
-print(a)
+    def tearDown(self):
+        """Limpiar después de las pruebas (opcional en este caso)."""
+        del self.jugador
 
-
-jugador = Jugador("Nerea", 15)
-print(jugador)
-
-
-
-
-
-
-
-
-
-
-# Primero creamos algunos jugadores
-jugador1 = Jugador("Bianca", 15)
-jugador2 = Jugador("Evelyn", 5)
-jugador3 = Jugador(Sol", 0)
-jugador4 = Jugador("Ambar", 10)
-
-
-# Creamos una ronda
-ronda = Ronda()
-
-
-# Agregamos jugadores a la ronda
-ronda.agregarJugador(jugador1)
-ronda.agregarJugador(jugador2)
-# Intentamos agregar un jugador sin fichas (esto debería dar un error)
-try:
-   ronda.agregarJugador(jugador3)
-except ValueError as e:
-   print(e)  # Imprime: El jugador no tiene fichas para jugar.
-
-
-ronda.agregarJugador(jugador4)
-
-
-# Mostramos el estado inicial de la ronda
-print("Estado inicial de la ronda:")
-print(ronda)  # Debería mostrar los jugadores en el orden en que fueron agregados
-
-
-# Pasamos el turno
-ronda.pasarTurno()
-print("\nDespués de pasar el turno:")
-print(ronda)  # El primer jugador debería estar ahora al final de la lista
-
-
-# Verificamos el jugador en turno
-print("\nJugador en turno:")
-print(ronda.jugadorEnTurno())  # Debería mostrar el jugador que ahora está al principio
-
-
-# Eliminamos jugadores sin fichas
-ronda.sacarJugadoresSinFichas()
-print("\nDespués de eliminar jugadores sin fichas:")
-print(ronda)  # Solo deberían quedar jugadores con fichas
-
-
-# Verificamos si queda un solo jugador
-if ronda.quedaUnSoloJugador():
-   print("\nQueda un solo jugador en la ronda.")
-else:
-   print("\nQuedan varios jugadores en la ronda.")
-
-
-
-
+if __name__ == "__main__":
+    unittest.mai
